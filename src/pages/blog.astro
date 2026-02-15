@@ -1,21 +1,22 @@
 ---
-
+import BaseLayout from "../layouts/BaseLayout.astro";
+const allPosts = Object.values(
+  import.meta.glob("./posts/*.md", { eager: true }),
+);
 ---
 
-<html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <link rel="icon" href="/favicon.ico" />
-    <meta name="viewport" content="width=device-width" />
-    <meta name="generator" content={Astro.generator} />
-    <title>Astro</title>
-  </head>
-  <body>
-    <a href="/">首页</a>
-    <a href="/about">关于</a>
-    <a href="/blog">博客</a>
-    <h1>我的博客</h1>
-    <h2>Boom</h2>
-  </body>
-</html>
+<BaseLayout>
+  <h1>博客</h1>
+  <p>欢迎来到我的博客！</p>
+  <ul>
+    {
+      allPosts.map((post: any) => {
+        return (
+          <li>
+            <a href={post.url}>{post.frontmatter.title}</a>
+          </li>
+        );
+      })
+    }
+  </ul>
+</BaseLayout>
